@@ -44,7 +44,14 @@ document.querySelector(".random_color").addEventListener("click", () => {
 	// loop over meshes
 	donut.traverse((child) => {
 		if (child.isMesh) {
+      console.log(child.name);
       donut.getObjectByName("Object_6").material.color.set(Math.random() * 0xFF0000);
 		}
 	})
 })
+
+document.querySelector(".recolor").addEventListener("input", updateFirst, false);
+
+function updateFirst(event) {
+  donut.getObjectByName("Object_6").material.color.set(event.target.value);
+}
