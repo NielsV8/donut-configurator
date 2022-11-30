@@ -4,6 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x87CEEB);
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer();
@@ -22,8 +23,8 @@ gltfLoader.load('./assets/models/donut/scene.gltf', (gltf) => {
 
 //add donut
 
-const dire = new THREE.DirectionalLight(0xffffff, 1);
-dire.position.set(2, 1, 2);
+const dire = new THREE.DirectionalLight(0xffffff, 2);
+dire.position.set(2, 4, 2);
 scene.add(dire);
 
 const direHelper = new THREE.DirectionalLightHelper(dire, 1);
@@ -50,8 +51,13 @@ document.querySelector(".random_color").addEventListener("click", () => {
 	})
 })
 
-document.querySelector(".recolor").addEventListener("input", updateFirst, false);
+document.querySelector(".recolor_glaze").addEventListener("input", updateGlaze, false);
+document.querySelector(".recolor_sprinkles").addEventListener("input", updateSprinkles, false);
 
-function updateFirst(event) {
+function updateGlaze(event) {
   donut.getObjectByName("Object_6").material.color.set(event.target.value);
+}
+
+function updateSprinkles(event) {
+  donut.getObjectByName("Object_8").material.color.set(event.target.value);
 }
