@@ -23,15 +23,23 @@ gltfLoader.load('./assets/models/donut/scene.gltf', (gltf) => {
 
 //add donut
 
-const dire = new THREE.DirectionalLight(0xffffff, 2);
+const dire = new THREE.DirectionalLight(0xfffffff, 2);
 dire.position.set(2, 4, 2);
 scene.add(dire);
-
-const direHelper = new THREE.DirectionalLightHelper(dire, 1);
-scene.add(direHelper);
 camera.position.z = 5;
+camera.position.y = 1;
 
-
+//mesh box
+const geometry = new THREE.BoxGeometry(2, 1, 1);
+  const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const cube = new THREE.Mesh(geometry, material);
+  cube.position.x = 0;
+  cube.position.y = 1.7;
+  cube.position.z = -1;
+  cube.scale.x = 1;
+  cube.scale.y = 0.1;
+  cube.scale.z = 1;
+  cube.rotation.x = 0.5;
 
 function animate() {
   requestAnimationFrame(animate);
@@ -45,7 +53,7 @@ document.querySelector(".random_color").addEventListener("click", () => {
 	// loop over meshes
 	donut.traverse((child) => {
 		if (child.isMesh) {
-      console.log(child.name);
+      console.log(child);
       donut.getObjectByName("Object_6").material.color.set(Math.random() * 0xFF0000);
 		}
 	})
@@ -61,3 +69,14 @@ function updateGlaze(event) {
 function updateSprinkles(event) {
   donut.getObjectByName("Object_8").material.color.set(event.target.value);
 }
+
+const checkbox = document.querySelector(".checkbox");
+
+checkbox.addEventListener("change", () => {
+  if (checkbox.checked) {
+    scene.add(cube);
+  } else {
+    scene.remove(cube);
+  }
+});
+
