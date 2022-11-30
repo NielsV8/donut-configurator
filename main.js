@@ -40,11 +40,10 @@ function animate() {
 
 animate();
 
-document.querySelector(".recolor").addEventListener("click", () => {
+document.querySelector(".random_color").addEventListener("click", () => {
 	// loop over meshes
 	donut.traverse((child) => {
 		if (child.isMesh) {
-			console.log(child);
       donut.getObjectByName("Object_6").material.color.set(Math.random() * 0xFF0000);
 		}
 	})
