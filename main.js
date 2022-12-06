@@ -22,26 +22,44 @@ gltfLoader.load('./assets/models/donut/scene.gltf', (gltf) => {
   scene.add(donut);
 });
 
-//add donut
+const removeimage = document.querySelector(".removeimage");
+removeimage.addEventListener("click", () => {
+    document.querySelector(".imageInput").value = null;
+    document.querySelector(".donutImage").src = null;
+})
 
+//add donut
 const dire = new THREE.DirectionalLight(0xfffffff, 2);
 dire.position.set(2, 4, 2);
 scene.add(dire);
 camera.position.z = 5;
 camera.position.y = 1;
 
+const imgInput = document.querySelector(".imageInput");
+const imgEl = document.querySelector(".donutImage");
+imgInput.addEventListener("change", (e) => {
+  if (imgInput.files && imgInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imgEl.src = e.target.result;
+    };
+    reader.readAsDataURL(imgInput.files[0]);
+  }
+});
+
+const rechthoekTexture = new THREE.TextureLoader().load(imgEl.src);
+const rechthoekGeometry = new THREE.BoxGeometry(2, 1, 1);
+const rechthoekMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, map: rechthoekTexture, side: THREE.FrontSide });
+const rechthoek = new THREE.Mesh(rechthoekGeometry, rechthoekMaterial);
+rechthoek.position.x = 0;
+rechthoek.position.y = 1.7;
+rechthoek.position.z = -1;
+rechthoek.scale.x = 1;
+rechthoek.scale.y = 0.1;
+rechthoek.scale.z = 1;
+rechthoek.rotation.x = 0.5;
+
 //mesh box
-  const rechthoekTexture = new THREE.TextureLoader().load('./assets/textures/sky.avif');
-  const rechthoekGeometry = new THREE.BoxGeometry(2, 1, 1);
-  const rechthoekMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, map: rechthoekTexture, side: THREE.FrontSide });
-  const rechthoek = new THREE.Mesh(rechthoekGeometry, rechthoekMaterial);
-  rechthoek.position.x = 0;
-  rechthoek.position.y = 1.7;
-  rechthoek.position.z = -1;
-  rechthoek.scale.x = 1;
-  rechthoek.scale.y = 0.1;
-  rechthoek.scale.z = 1;
-  rechthoek.rotation.x = 0.5;
 
   const vierkantGeometry = new THREE.BoxGeometry(1, 1, 1);
   const vierkantMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
